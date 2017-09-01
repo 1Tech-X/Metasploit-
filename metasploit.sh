@@ -6,7 +6,7 @@ echo "##############################################"
 echo "WAIT UNTIL INSTALLING............" 
 
 echo "####################################"
-apt install autoconf bison clang coreutils curl findutils git apr figlet apr-util libffi-dev libgmp-dev libpcap-dev postgresql-dev readline-dev libsqlite-dev openssl-dev libtool libxml2-dev libxslt-dev ncurses-dev pkg-config postgresql-contrib wget make ruby-dev libgrpc-dev ncurses-utils termux-tools -y
+apt install autoconf bison clang coreutils curl findutils git apr apr-util libffi-dev libgmp-dev libpcap-dev postgresql-dev readline-dev libsqlite-dev openssl-dev libtool libxml2-dev libxslt-dev ncurses-dev pkg-config postgresql-contrib wget make ruby-dev libgrpc-dev ncurses-utils termux-tools -y
 echo "####################################"
 echo "Downloading & Extracting....."
 
@@ -27,7 +27,16 @@ gem install nokogiri -- --use-system-libraries
 
 #Install Network-Interface
 
-gem install network_interface
+gem unpack network_interface -v 0.0.1
+cd network_interface-0.0.1
+sed 's|git ls-files|find -type f|' -i network_interface.gemspec
+curl -L https://wiki.termux.com/images/6/6b/Netifaces.patch -o netifaces.patch
+patch -p1 < netifaces.patch
+gem build network_interface.gemspec
+echo "network_interface is installing........"
+gem install network_interface-0.0.1.gem
+cd ..
+rm -r network_interface-0.0.1
 
 #Install gems
 gem unpack grpc -v 1.4.1
@@ -51,18 +60,16 @@ $PREFIX/bin/find -type f -executable -exec termux-fix-shebang \{\} \;
 cd metasploit-framework-4.14.28
 
 echo "###############################"
-echo "Thanks  To  Vishalbiswani& Auxilus "
+echo "Thanx  To  Vishalbiswani"
 echo "###############################"
-figlet Tech-X
+
 echo "###############################################"
-echo "Subscribe  My channel Tech-X"
-figlet Subscribe
+echo "Subscribe  My  Channel  To  Motivate  My  Work"
 echo "###############################################"
 echo "###############################"
-echo "For More Hacking video At Tech-X Channel"
+echo "For  More. Tricks. Visit  At  Tech-X "
 echo "###############################"
-figlet Tech-X 
 echo "####################################"
-echo " NOW YOU CAN RUN METASPLOIT BY JUST EXECUTE THE COMMAND :=>  ./msfconsole"
+echo " NOW YOU CAN LAUNCH METASPLOIT BY JUST EXECUTE THE COMMAND :=>  ./msfconsole"
 echo "####################################"
-figlet Finish
+exec bash
